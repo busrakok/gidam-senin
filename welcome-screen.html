@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gıdam Senin - Hoş Geldiniz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="welcome-screen.css">
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-content">
+            <div class="welcome-logo-container">
+                <img src="img/gidam-senin-logo.png" alt="Gıdam Senin" class="welcome-main-logo">
+            </div>
+            <div class="welcome-buttons">
+                <button class="welcome-button" onclick="showAuth('register')">KAYIT OL</button>
+                <button class="welcome-button secondary" onclick="showAuth('login')">GİRİŞ YAP</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Screens -->
+    <div class="auth-screen" id="authScreen">
+        <div class="auth-header">
+            <button class="back-btn" onclick="backToWelcome()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h2 class="auth-title" id="authTitle">Kayıt Ol</h2>
+        </div>
+        <div class="auth-content">
+            <!-- Register Form -->
+            <form class="auth-form" id="registerForm">
+                <div class="form-group">
+                    <label class="form-label" for="regName">Ad Soyad</label>
+                    <input class="form-input" type="text" id="regName" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="regEmail">E-posta</label>
+                    <input class="form-input" type="email" id="regEmail" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="regPhone">Telefon</label>
+                    <input class="form-input" type="tel" id="regPhone" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="regPassword">Şifre</label>
+                    <input class="form-input" type="password" id="regPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i>
+                    Kayıt Ol
+                </button>
+                <div class="auth-switch">
+                    Zaten hesabın var mı? 
+                    <button type="button" onclick="switchToLogin()">Giriş Yap</button>
+                </div>
+            </form>
+
+            <!-- Login Form -->
+            <form class="auth-form" id="loginForm" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label" for="loginEmail">E-posta</label>
+                    <input class="form-input" type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="loginPassword">Şifre</label>
+                    <input class="form-input" type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Giriş Yap
+                </button>
+                <div class="auth-switch">
+                    Hesabın yok mu? 
+                    <button type="button" onclick="switchToRegister()">Kayıt Ol</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notificationContainer"></div>
+
+    <script src="register-login.js"></script>
+</body>
+</html>

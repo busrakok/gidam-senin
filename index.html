@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gıdam Senin</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Main App -->
+    <div class="app" id="mainApp">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <h1 class="app-title">GIDAM SENiN</h1>
+                <div class="user-info" id="userInfo">
+                    <div class="user-avatar" id="userAvatar">A</div>
+                    <span id="userName">Kullanıcı</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Section -->
+            <section id="home" class="section active">
+                <div class="menu-grid">
+                    <div class="menu-card" onclick="showSection('share')">
+                        <div class="menu-icon share">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h3 class="menu-title">Gıda<br>Paylaş</h3>
+                    </div>
+                    <div class="menu-card" onclick="showSection('find')">
+                        <div class="menu-icon find">
+                            <i class="fas fa-search-location"></i>
+                        </div>
+                        <h3 class="menu-title">Gıda<br>Bul</h3>
+                    </div>
+                    <div class="menu-card" onclick="showSection('map')">
+                        <div class="menu-icon bus">
+                            <i class="fas fa-list-alt"></i>
+                        </div>
+                        <h3 class="menu-title">Otobüs<br>Nerede?</h3>
+                    </div>
+                    <div class="menu-card" onclick="showSection('track')">
+                        <div class="menu-icon track">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <h3 class="menu-title">Gıda Takip<br>Asistanı</h3>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profile" class="section">
+                <div class="profile-card">
+                    <div class="profile-avatar" id="profileAvatar">A</div>
+                    <h2 class="profile-name" id="profileName">Kullanıcı</h2>
+                    <p class="profile-email" id="profileEmail">email@example.com</p>
+                    
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <div class="stat-number" id="sharedCount">0</div>
+                            <div class="stat-label">Paylaşılan Gıda</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="receivedCount">0</div>
+                            <div class="stat-label">Alınan Gıda</div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-actions">
+                        <button class="btn btn-outline" onclick="editProfile()">
+                            <i class="fas fa-edit"></i>
+                            Profili Düzenle
+                        </button>
+                        <button class="btn btn-outline" onclick="showPhoneNumber()">
+                            <i class="fas fa-phone"></i>
+                            Telefon: <span id="profilePhone">***</span>
+                        </button>
+                        <button class="btn btn-primary" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Çıkış Yap
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Share Food Section -->
+            <section id="share" class="section">
+                <h2 class="section-title">Gıda Paylaş</h2>
+                <div class="form-container">
+                    <form id="shareForm">
+                        <div class="form-group">
+                            <label class="form-label" for="category">Kategori</label>
+                            <select class="form-select" id="category" name="category" required>
+                                <option value="">Kategori Seçin</option>
+                                <option value="meyve">Meyve</option>
+                                <option value="sebze">Sebze</option>
+                                <option value="et">Et Ürünleri</option>
+                                <option value="sut">Süt Ürünleri</option>
+                                <option value="tahil">Tahıl Ürünleri</option>
+                                <option value="icecek">İçecek</option>
+                                <option value="diger">Diğer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="productName">Ürün Adı</label>
+                            <input class="form-input" type="text" id="productName" name="productName" placeholder="Örn: Elma, Ekmek, Süt" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="quantity">Miktar</label>
+                            <input class="form-input" type="text" id="quantity" name="quantity" placeholder="Örn: 2 kg, 5 adet, 1 litre" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="expiryDate">Son Kullanma Tarihi</label>
+                            <input class="form-input" type="date" id="expiryDate" name="expiryDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="notes">Notlar (Opsiyonel)</label>
+                            <textarea class="form-textarea" id="notes" name="notes" placeholder="Ek bilgiler..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-share"></i>
+                            Gıda Paylaş
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Find Food Section -->
+            <section id="find" class="section">
+                <h2 class="section-title">Gıda Bul</h2>
+                <div class="search-filters">
+                    <div class="filter-row">
+                        <select class="form-select filter-input" id="searchCategory">
+                            <option value="">Tüm Kategoriler</option>
+                            <option value="meyve">Meyve</option>
+                            <option value="sebze">Sebze</option>
+                            <option value="et">Et Ürünleri</option>
+                            <option value="sut">Süt Ürünleri</option>
+                            <option value="tahil">Tahıl Ürünleri</option>
+                            <option value="icecek">İçecek</option>
+                            <option value="diger">Diğer</option>
+                        </select>
+                    </div>
+                    <div class="filter-row">
+                        <input class="form-input filter-input" type="text" id="searchProduct" placeholder="Ürün ara...">
+                        <button class="btn btn-secondary" id="searchBtn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="foodList" class="food-list">
+                    <!-- Food items will be populated here -->
+                </div>
+            </section>
+
+            <!-- Map Section -->
+            <section id="map" class="section">
+                <h2 class="section-title">Otobüs Konumları</h2>
+                <div class="map-container">
+                    <div id="leafletMap" class="map"></div>
+                </div>
+            </section>
+
+            <!-- Track Section -->
+            <section id="track" class="section">
+                <h2 class="section-title">Gıda Takip Asistanı</h2>
+                <div class="track-tabs">
+                    <button class="tab-btn active" data-tab="given">Verdiğim Gıdalar</button>
+                    <button class="tab-btn" data-tab="taken">Aldığım Gıdalar</button>
+                </div>
+                <div id="givenOrders" class="tab-content active">
+                    <!-- Given orders will be populated here -->
+                </div>
+                <div id="takenOrders" class="tab-content">
+                    <!-- Taken orders will be populated here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="nav-container">
+                <div class="nav-item active" onclick="showSection('home')">
+                    <i class="nav-icon fas fa-home"></i>
+                    <span class="nav-text">Ana Sayfa</span>
+                </div>
+                <div class="nav-item" onclick="showSection('map')">
+                    <i class="nav-icon fas fa-map-marker-alt"></i>
+                    <span class="nav-text">Harita</span>
+                </div>
+                <div class="nav-item" onclick="showSection('share')">
+                    <i class="nav-icon fas fa-plus"></i>
+                    <span class="nav-text">Paylaş</span>
+                </div>
+                <div class="nav-item" onclick="showSection('profile')">
+                    <i class="nav-icon fas fa-user"></i>
+                    <span class="nav-text">Profil</span>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Modal for Bus Details -->
+    <div id="busModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalBusName">Otobüs Detayları</h3>
+            <div id="modalBusContent">
+                <!-- Bus details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
