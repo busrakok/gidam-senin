@@ -91,6 +91,7 @@ body {
 /* Main Content */
 .main-content {
   padding: 2rem 1rem;
+  padding-bottom: 120px; /* Alt navigasyon için boşluk */
   max-width: 400px;
   margin: 0 auto;
   min-height: calc(100vh - 200px);
@@ -235,6 +236,7 @@ body {
   padding: 1rem 0;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  border-top: 1px solid #eee;
 }
 
 .nav-container {
@@ -273,6 +275,7 @@ body {
 .section {
   display: none;
   padding: 2rem 1rem;
+  padding-bottom: 120px; /* Alt navigasyon için boşluk */
   max-width: 400px;
   margin: 0 auto;
   min-height: calc(100vh - 200px);
@@ -627,6 +630,12 @@ body {
 @media (max-width: 480px) {
   .main-content {
     padding: 1rem 0.5rem;
+    padding-bottom: 120px; /* Alt navigasyon için boşluk */
+  }
+  
+  .section {
+    padding: 1rem 0.5rem;
+    padding-bottom: 120px; /* Alt navigasyon için boşluk */
   }
   
   .menu-grid {
@@ -639,6 +648,12 @@ body {
   
   .profile-stats {
     grid-template-columns: 1fr;
+  }
+  
+  /* Alt navigasyon için ek alan */
+  .food-actions,
+  .profile-actions {
+    margin-bottom: 1rem;
   }
 }
 
